@@ -15,6 +15,7 @@ window.onload = function () {
         document.body.appendChild(heart);
     }
 
+};
     // Music Button
     const music = document.getElementById("bgMusic");
     const musicBtn = document.getElementById("musicBtn");
