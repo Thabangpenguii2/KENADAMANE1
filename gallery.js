@@ -1,5 +1,6 @@
 window.onload = function () {
 
+    // 🖼️ Slideshow images
     const images = [
         "images/IMG-20260219-WA0072.jpg",
         "images/IMG-20260219-WA0073.jpg",
@@ -14,20 +15,37 @@ window.onload = function () {
 
     const slide = document.getElementById("slide");
 
-    let current = 0;
+    if (slide && images.length > 0) {
 
-    setInterval(function () {
+        let current = 0;
 
-        current = (current + 1) % images.length;
-        slide.src = images[current];
+        setInterval(() => {
+            current = (current + 1) % images.length;
+            slide.src = images[current];
+        }, 3000);
+    }
 
-    }, 3000);
-
-};
-    // Music Button
+    // 🎵 Music
     const music = document.getElementById("bgMusic");
     const musicBtn = document.getElementById("musicBtn");
 
+    if (music) {
+
+        // auto-resume if user previously played
+        if (localStorage.getItem("music") === "on") {
+            music.play();
+        }
+
+        music.addEventListener("play", () => {
+            localStorage.setItem("music", "on");
+        });
+
+        music.addEventListener("pause", () => {
+            localStorage.setItem("music", "off");
+        });
+    }
+
+    // button control
     if (music && musicBtn) {
 
         musicBtn.addEventListener("click", function () {
@@ -43,3 +61,5 @@ window.onload = function () {
         });
 
     }
+
+};

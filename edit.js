@@ -1,6 +1,6 @@
 window.onload = function () {
 
-    // Floating Hearts
+    // ❤️ Floating Hearts
     for (let i = 0; i < 30; i++) {
 
         const heart = document.createElement("div");
@@ -15,10 +15,27 @@ window.onload = function () {
         document.body.appendChild(heart);
     }
 
-    // Music Button
+    // 🎵 Music Control (SAFE)
     const music = document.getElementById("bgMusic");
     const musicBtn = document.getElementById("musicBtn");
 
+    if (music) {
+
+        // auto-resume music state
+        if (localStorage.getItem("music") === "on") {
+            music.play();
+        }
+
+        music.addEventListener("play", () => {
+            localStorage.setItem("music", "on");
+        });
+
+        music.addEventListener("pause", () => {
+            localStorage.setItem("music", "off");
+        });
+    }
+
+    // button only if exists
     if (music && musicBtn) {
 
         musicBtn.addEventListener("click", function () {
@@ -35,7 +52,7 @@ window.onload = function () {
 
     }
 
-    // Slideshow
+    // 🖼️ Slideshow (SAFE)
     const images = [
         "images 2/IMG-20260220-WA0031.jpg",
         "images 2/IMG-20260224-WA0060.jpg",
@@ -44,11 +61,11 @@ window.onload = function () {
 
     const slide = document.getElementById("slide");
 
-    if (slide) {
+    if (slide && images.length > 0) {
 
         let current = 0;
 
-        setInterval(function () {
+        setInterval(() => {
 
             current = (current + 1) % images.length;
             slide.src = images[current];
