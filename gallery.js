@@ -25,25 +25,29 @@ window.onload = function () {
         }, 3000);
     }
 
-    // 🎵 Music
-    const music = document.getElementById("bgMusic");
-    const musicBtn = document.getElementById("musicBtn");
+   const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
 
-    if (music) {
+if (music && musicBtn) {
 
-        // auto-resume if user previously played
-        if (localStorage.getItem("music") === "on") {
-            music.play();
+    musicBtn.addEventListener("click", function () {
+
+        // IMPORTANT: force play properly
+        music.play().then(() => {
+            musicBtn.innerHTML = "⏸ Pause Music";
+        }).catch((err) => {
+            console.log("Music blocked:", err);
+        });
+
+        // toggle pause after play starts
+        if (!music.paused) {
+            music.pause();
+            musicBtn.innerHTML = "🎵 Play Music";
         }
 
-        music.addEventListener("play", () => {
-            localStorage.setItem("music", "on");
-        });
+    });
 
-        music.addEventListener("pause", () => {
-            localStorage.setItem("music", "off");
-        });
-    }
+}UP
 
     // button control
     if (music && musicBtn) {
