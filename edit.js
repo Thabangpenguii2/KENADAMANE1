@@ -15,7 +15,6 @@ window.onload = function () {
         document.body.appendChild(heart);
     }
 
-};
     // Music Button
     const music = document.getElementById("bgMusic");
     const musicBtn = document.getElementById("musicBtn");
@@ -51,12 +50,7 @@ window.onload = function () {
 
         setInterval(function () {
 
-            current++;
-
-            if (current >= images.length) {
-                current = 0;
-            }
-
+            current = (current + 1) % images.length;
             slide.src = images[current];
 
         }, 3000);

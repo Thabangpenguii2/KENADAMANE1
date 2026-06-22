@@ -15,15 +15,35 @@
          alt="MRS Moukangwe"
          width="300">
 
-    <br><br>
-       
+    <!-- Background Music (ONLY ONE) -->
+    <audio id="bgMusic" loop>
+        <source src="mp3/Kelvin-Momo-Emhlabeni-Ft-Da-Muziqal-Chef-Tracy-Thatohatsi-(HipHopKit.com).mp3" type="audio/mp3">
+    </audio>
+
     <a href="Thabang.html" class="btn">
-            YOUR MAN
-        </a>
-        
+        YOUR MAN ❤️
     </a>
 
     <script src="gallery.js"></script>
+
+    <!-- MUSIC FIX -->
+    <script>
+        const music = document.getElementById("bgMusic");
+
+        window.addEventListener("load", () => {
+            if (localStorage.getItem("music") === "on") {
+                music.play();
+            }
+        });
+
+        music.addEventListener("play", () => {
+            localStorage.setItem("music", "on");
+        });
+
+        music.addEventListener("pause", () => {
+            localStorage.setItem("music", "off");
+        });
+    </script>
 
 </body>
 

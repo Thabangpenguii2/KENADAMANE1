@@ -18,9 +18,32 @@
     <br><br>
 
     <a href="home.html" class="btn">🏠 Back Home</a>
-    
+
+    <!-- MUSIC (ONLY ONE) -->
+    <audio id="bgMusic" loop>
+        <source src="mp3/Kelvin-Momo-Emhlabeni-Ft-Da-Muziqal-Chef-Tracy-Thatohatsi-(HipHopKit.com).mp3" type="audio/mp3">
+    </audio>
 
     <script src="edit.js"></script>
+
+    <!-- MUSIC FIX -->
+    <script>
+        const music = document.getElementById("bgMusic");
+
+        window.addEventListener("load", () => {
+            if (localStorage.getItem("music") === "on") {
+                music.play();
+            }
+        });
+
+        music.addEventListener("play", () => {
+            localStorage.setItem("music", "on");
+        });
+
+        music.addEventListener("pause", () => {
+            localStorage.setItem("music", "off");
+        });
+    </script>
 
 </body>
 
