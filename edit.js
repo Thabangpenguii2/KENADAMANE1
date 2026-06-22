@@ -6,13 +6,10 @@ window.onload = function () {
         const heart = document.createElement("div");
 
         heart.classList.add("heart");
-
         heart.innerHTML = "❤️";
 
         heart.style.left = Math.random() * 100 + "vw";
-
         heart.style.fontSize = (15 + Math.random() * 25) + "px";
-
         heart.style.animationDuration = (5 + Math.random() * 7) + "s";
 
         document.body.appendChild(heart);
@@ -22,9 +19,9 @@ window.onload = function () {
     const music = document.getElementById("bgMusic");
     const musicBtn = document.getElementById("musicBtn");
 
-    if (musicBtn && music) {
+    if (music && musicBtn) {
 
-        musicBtn.addEventListener("click", () => {
+        musicBtn.addEventListener("click", function () {
 
             if (music.paused) {
                 music.play();
@@ -40,25 +37,25 @@ window.onload = function () {
 
     // Slideshow
     const images = [
-        "images/IMG-20260219-WA0072.jpg",
-        "images/IMG-20260219-WA0073.jpg",
-        "images/IMG-20260303-WA0029.jpg",
-        "images/IMG-20260303-WA0033.jpg",
-        "images/IMG-20260303-WA0035.jpg",
-        "images/IMG-20260303-WA0036.jpg",
-        "images/IMG-20260306-WA0004.jpg",
-         "images/IMG-20260306-WA00040001.jpg",
-          "images/IMG-20260527-WA0023.jpg",
+        "images 2/IMG-20260220-WA0031.jpg",
+        "images 2/IMG-20260224-WA0060.jpg",
+        "images 2/IMG-20260520-WA0002.jpg"
     ];
 
-    let current = 0;
     const slide = document.getElementById("slide");
 
     if (slide) {
 
-        setInterval(() => {
+        let current = 0;
 
-            current = (current + 1) % images.length;
+        setInterval(function () {
+
+            current++;
+
+            if (current >= images.length) {
+                current = 0;
+            }
+
             slide.src = images[current];
 
         }, 3000);
