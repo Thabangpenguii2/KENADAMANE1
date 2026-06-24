@@ -15,15 +15,22 @@ window.onload = function () {
         document.body.appendChild(heart);
     }
 
-    // 🎵 Music Control (SAFE)
+    // 🎵 Music Control
     const music = document.getElementById("bgMusic");
     const musicBtn = document.getElementById("musicBtn");
 
     if (music) {
 
-        // auto-resume music state
-        if (localStorage.getItem("music") === "on") {
-            music.play();
+        // Restore song position
+        const savedTime = localStorage.getItem("musicTime");
+        const musicOn = localStorage.getItem("music") === "on";
+
+        if (savedTime) {
+            music.currentTime = parseFloat(savedTime);
+        }
+
+        if (musicOn) {
+            music.play().catch(() => {});
         }
 
         music.addEventListener("play", () => {
@@ -33,26 +40,42 @@ window.onload = function () {
         music.addEventListener("pause", () => {
             localStorage.setItem("music", "off");
         });
+
+        // Save song position every second
+        setInterval(() => {
+            localStorage.setItem("musicTime", music.currentTime);
+        }, 1000);
+
+        // Save before leaving page
+        window.addEventListener("beforeunload", () => {
+            localStorage.setItem("musicTime", music.currentTime);
+        });
     }
 
-    // button only if exists
+    // 🎵 Button Control
     if (music && musicBtn) {
 
         musicBtn.addEventListener("click", function () {
 
             if (music.paused) {
+
                 music.play();
                 musicBtn.innerHTML = "⏸ Pause Music";
+                localStorage.setItem("music", "on");
+
             } else {
+
                 music.pause();
                 musicBtn.innerHTML = "🎵 Play Music";
+                localStorage.setItem("music", "off");
+
             }
 
         });
 
     }
 
-    // 🖼️ Slideshow (SAFE)
+    // 🖼️ Slideshow
     const images = [
         "images 2/IMG-20260220-WA0031.jpg",
         "images 2/IMG-20260224-WA0060.jpg",

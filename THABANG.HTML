@@ -17,31 +17,53 @@
 
     <br><br>
 
-    <a href="home.html" class="btn">🏠 Back Home</a>
+    <a href="home.html"
+       class="btn"
+       onclick="localStorage.setItem('musicTime', document.getElementById('bgMusic').currentTime)">
+       🏠 Back Home
+    </a>
 
-    <!-- MUSIC (ONLY ONE) -->
+    <!-- Background Music -->
     <audio id="bgMusic" loop>
         <source src="mp3/Kelvin-Momo-Emhlabeni-Ft-Da-Muziqal-Chef-Tracy-Thatohatsi-(HipHopKit.com).mp3" type="audio/mp3">
     </audio>
 
     <script src="edit.js"></script>
 
-    <!-- MUSIC FIX -->
     <script>
         const music = document.getElementById("bgMusic");
 
+        // Restore music position and state
         window.addEventListener("load", () => {
-            if (localStorage.getItem("music") === "on") {
-                music.play();
+            const savedTime = localStorage.getItem("musicTime");
+            const musicOn = localStorage.getItem("music") === "on";
+
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
+
+            if (musicOn) {
+                music.play().catch(() => {});
             }
         });
 
+        // Save music state
         music.addEventListener("play", () => {
             localStorage.setItem("music", "on");
         });
 
         music.addEventListener("pause", () => {
             localStorage.setItem("music", "off");
+        });
+
+        // Save current position every second
+        setInterval(() => {
+            localStorage.setItem("musicTime", music.currentTime);
+        }, 1000);
+
+        // Save position before leaving page
+        window.addEventListener("beforeunload", () => {
+            localStorage.setItem("musicTime", music.currentTime);
         });
     </script>
 

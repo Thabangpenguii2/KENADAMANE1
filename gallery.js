@@ -16,7 +16,6 @@ window.onload = function () {
     const slide = document.getElementById("slide");
 
     if (slide && images.length > 0) {
-
         let current = 0;
 
         setInterval(() => {
@@ -25,41 +24,52 @@ window.onload = function () {
         }, 3000);
     }
 
-   const music = document.getElementById("bgMusic");
-const musicBtn = document.getElementById("musicBtn");
+    // 🎵 Music
+    const music = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
 
-if (music && musicBtn) {
+    if (music) {
 
-    musicBtn.addEventListener("click", function () {
+        const savedTime = localStorage.getItem("musicTime");
+        const musicOn = localStorage.getItem("music") === "on";
 
-        // IMPORTANT: force play properly
-        music.play().then(() => {
-            musicBtn.innerHTML = "⏸ Pause Music";
-        }).catch((err) => {
-            console.log("Music blocked:", err);
-        });
-
-        // toggle pause after play starts
-        if (!music.paused) {
-            music.pause();
-            musicBtn.innerHTML = "🎵 Play Music";
+        if (savedTime) {
+            music.currentTime = parseFloat(savedTime);
         }
 
-    });
+        if (musicOn) {
+            music.play().catch(() => {});
+        }
 
-}UP
+        setInterval(() => {
+            localStorage.setItem("musicTime", music.currentTime);
+        }, 1000);
 
-    // button control
+        window.addEventListener("beforeunload", () => {
+            localStorage.setItem("musicTime", music.currentTime);
+        });
+    }
+
+    // 🎵 Button Control
     if (music && musicBtn) {
 
         musicBtn.addEventListener("click", function () {
 
             if (music.paused) {
-                music.play();
-                musicBtn.innerHTML = "⏸ Pause Music";
+
+                music.play()
+                    .then(() => {
+                        musicBtn.innerHTML = "⏸ Pause Music";
+                        localStorage.setItem("music", "on");
+                    })
+                    .catch(err => console.log(err));
+
             } else {
+
                 music.pause();
                 musicBtn.innerHTML = "🎵 Play Music";
+                localStorage.setItem("music", "off");
+
             }
 
         });

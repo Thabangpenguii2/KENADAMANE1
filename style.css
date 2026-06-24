@@ -11,12 +11,12 @@ body {
     overflow-x: hidden;
     position: relative;
     text-align: center;
-    padding-top: 40px;
+    padding: 40px 20px;
 }
 
 h1 {
     color: white;
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     margin-bottom: 20px;
 }
 
@@ -29,7 +29,7 @@ p {
 
 .container {
     text-align: center;
-    padding: 50px;
+    padding: 40px 25px;
     width: 90%;
     max-width: 600px;
     background: rgba(255,255,255,0.2);
@@ -48,6 +48,8 @@ p {
     color: #ff4f81;
     font-weight: bold;
     transition: 0.3s;
+    border: none;
+    cursor: pointer;
 }
 
 .btn:hover {
@@ -67,7 +69,6 @@ p {
         transform: translateY(0);
         opacity: 1;
     }
-
     to {
         transform: translateY(-110vh);
         opacity: 0;
@@ -75,7 +76,7 @@ p {
 }
 
 .slideshow {
-    width: 350px;
+    width: min(350px, 90vw);
     height: 450px;
     margin: 20px auto;
     overflow: hidden;

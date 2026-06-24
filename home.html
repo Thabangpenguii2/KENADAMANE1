@@ -11,7 +11,7 @@
 
 <body>
 
-    <!-- Background Music (ONLY ONE) -->
+    <!-- Background Music -->
     <audio id="bgMusic" loop>
         <source src="mp3/Kelvin-Momo-Emhlabeni-Ft-Da-Muziqal-Chef-Tracy-Thatohatsi-(HipHopKit.com).mp3" type="audio/mp3">
     </audio>
@@ -33,28 +33,50 @@
 
         <br><br>
 
-        <a href="picture.html" class="btn">Open My Heart 💌</a>
+        <a href="picture.html">
+           class="btn"
+           onclick="localStorage.setItem('musicTime', document.getElementById('bgMusic').currentTime)">
+           Open My Heart 💌
+        </a>
 
     </div>
 
     <script src="gallery.js"></script>
 
-    <!-- MUSIC FIX SCRIPT -->
     <script>
         const music = document.getElementById("bgMusic");
         const btn = document.getElementById("musicBtn");
 
-        // Play button
-        btn.addEventListener("click", () => {
-            music.play();
-            localStorage.setItem("music", "on");
+        // Restore music state and position
+        window.addEventListener("load", () => {
+            const savedTime = localStorage.getItem("musicTime");
+            const musicOn = localStorage.getItem("music") === "on";
+
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
+
+            if (musicOn) {
+                music.play().catch(() => {});
+            }
         });
 
-        // Auto-resume if user already started music before
-        window.addEventListener("load", () => {
-            if (localStorage.getItem("music") === "on") {
-                music.play();
+        // Play music when button clicked
+        btn.addEventListener("click", () => {
+            music.play();
+
+            localStorage.setItem("music", "on");
+
+            if (!window.musicSaver) {
+                window.musicSaver = setInterval(() => {
+                    localStorage.setItem("musicTime", music.currentTime);
+                }, 1000);
             }
+        });
+
+        // Save position before page changes
+        window.addEventListener("beforeunload", () => {
+            localStorage.setItem("musicTime", music.currentTime);
         });
     </script>
 
